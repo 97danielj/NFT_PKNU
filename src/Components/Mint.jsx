@@ -28,7 +28,6 @@ export default function Mint(props) {
     const [walletConnection, setWalletConnection] = useState(false);
     let caver = new Caver(window.klaytn);
     let contract = new caver.contract.create(dABI, walletaddr);
-    let NFTPrice = process.env.REACT_APP_NFT_PRICE.toString();
   
     
   useEffect(async () => {
@@ -80,23 +79,25 @@ export default function Mint(props) {
     }
   }
 
-  const mint = async () => {
+  const getCurrentPriceOfNFT = async () => {
+    const result = await contract.methods.getCurrentPriceOfNFT().call();
+    return caver.utils.fromPeb(result);
+  };
+
+  const mintNFT = async (e) => {
     let ret;
       ret = await caver.klay.sendTransaction({
           type: 'SMART_CONTRACT_EXECUTION',
           from: account,
           to: walletaddr,
-          value: caver.utils.toPeb((NFTPrice * 1).toString(), 'KLAY'),
-          data: contract.methods.mint(mintCnt, process.env.REACT_APP_TREASURY_ACCOUNT,1, account).encodeABI(),
+          value: caver.utils.toPeb(1, "KLAY").toString(),
+          data: contract.methods.mint(fullNameData, titleData, otherData, backgroundColor, textColor).encodeABI(),
           gas: '850000'
         }).then((res)=>{console.log(res);})
         .catch((err) => {alert("민트에 실패하였습니다.");});
-        let mintCount = await contract.methods.getMintedCount(minterAddress).call();
-        setMintCnt(mintCount);
       
         await wait(3000);
   
-    
   }
 
 
@@ -105,8 +106,8 @@ export default function Mint(props) {
   const [fullNameData, setfullNameData] = useState("이름");
   const [titleData, settitleData] = useState("소개");
   const [otherData, setotherData] = useState("이메일|회사|웹사이트|SNS");
-  const [backgroundColor, setbackgroundColor] = useState("#a3eeff");
-  const [textColor, settextColor] = useState("#17aab2");
+  const [backgroundColor, setbackgroundColor] = useState("#A3EEFF");
+  const [textColor, settextColor] = useState("#17AAB2");
   const [walletAddress, setwalletAddress] = useState("");
   const [currentPriceOfNFT, setcurrentPriceOfNFT] = useState("");
 
@@ -206,7 +207,7 @@ export default function Mint(props) {
                 </div>
       </div> */}
       <div className="flex w-full">
-                <button  type="submit" onClick={(e) => mint(e)} className="py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                <button  type="submit" onClick={(e) => mintNFT(e)} className="py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                   NFT 명함 만들기
                 </button>
       </div>
@@ -227,8 +228,6 @@ export default function Mint(props) {
       <div style={{display: 'flex', justifyContent: 'center'}}><Button variant="contained" style={{height: '50px', width: '200px', margin:'10px', background: '#5D5D5D', color: 'white'}} disabled={walletConnection} onClick={connectWallet}>{walletConnection ? (account.toString().slice(0,10) + "...") : "Wallet Connect"}</Button></div>
       <div style={{display: 'flex',justifyContent: 'center'}}>
         <Stack spacing={1}>
-          <div>남은 수량 {process.env.REACT_APP_NFT_NUM - mintCnt}개</div>
-          <div>Price : {process.env.REACT_APP_NFT_PRICE} Klay</div>
         </Stack>
         
       </div>
