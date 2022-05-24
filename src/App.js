@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import react, {Component, useState} from 'react';
 import Mint from './Components/Mint';
-import NFTBC from './Nftbc';
+import NavBar from './Components/nav';
 
 class App extends Component {
 
@@ -10,6 +10,7 @@ class App extends Component {
 
       return (
         <div className="App">
+          <NavBar/>
           <Mint/>
         </div>
       );

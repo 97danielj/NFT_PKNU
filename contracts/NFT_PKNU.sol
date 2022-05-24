@@ -348,7 +348,6 @@ contract NFT_PKNU is ERC721Enumerable, Ownable {
         string textColor;
     }
 
-    // public
     function mint(
         string memory _name,
         string memory _role,
