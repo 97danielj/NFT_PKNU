@@ -5,14 +5,7 @@ import { ColorPicker, useColor } from "react-color-palette";
 import "react-color-palette/lib/css/styles.css";
 import Caver from 'caver-js';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import randomColor from "randomcolor";
-import { SwatchesPicker } from 'react-color';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
 
 let walletaddr = ContractData.walletaddr;
 if(process.env.REACT_APP_NETWORK == "baobab"){
@@ -142,8 +135,8 @@ export default function Mint(props) {
       </div>
       <div style={{display: 'flex',justifyContent: 'center'}}>
       <ColorPicker
-            width={406}
-            height={258}
+            width={456}
+            height={158}
             color={color}
             onChange={setColor}
             onChangeComplete={(color) => console.log(`Final color: ${color.hex}!`)}
@@ -197,7 +190,7 @@ export default function Mint(props) {
 
 
 
-      <div style={{display: 'flex', justifyContent: 'center'}}><Button variant="contained" style={{height: '50px', width: '200px', margin:'10px', background: '#5D5D5D', color: 'white'}} disabled={walletConnection} onClick={connectWallet}>{walletConnection ? (account.toString().slice(0,10) + "...") : "Wallet Connect"}</Button></div>
+      <div style={{display: 'flex', justifyContent: 'center'}}><Button variant="contained" style={{height: '50px', width: '200px', margin:'10px', background: '#5D5D5D', color: 'white'}} disabled={walletConnection} onClick={connectWallet}>{walletConnection ? ("연결 된 지갑 주소 " + account.toString().slice(0,10) + "...") : "지갑 연결하기"}</Button></div>
     </div>
   );
 }

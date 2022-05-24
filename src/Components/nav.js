@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
+import { Nav, Navbar, Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function NavBar() {
@@ -10,8 +10,17 @@ function NavBar() {
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="me-auto">
-      <Nav.Link href="#">오픈씨 컬렉션 주소</Nav.Link>
-      <Nav.Link href="#">컨트랙트 조회</Nav.Link>
+      </Nav>
+      <Nav>
+        <Nav.Link href="https://testnets.opensea.io/collection/nft-pknu" target='_blank'>
+          <img src="opensea.svg" width='30'></img>
+        </Nav.Link>
+        <Nav.Link href="https://baobab.klaytnfinder.io/account/0x666c529cf50fbd17dbc44ed8456b283b822cfe04" target='_blank'>
+          <img src="klaytnfinder.png" width='30'></img>
+        </Nav.Link>
+        <Nav.Link href="https://github.com/ezardddd/NFT_PKNU" target='_blank'>
+          <img src="github.png" width='30'></img>
+        </Nav.Link>
       </Nav>
     </Navbar.Collapse>
     </Container>
